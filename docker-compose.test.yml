@@ -1,8 +1,19 @@
 version: '3.0'
 services:
+  dynamodb: 
+    image: "aaronshaf/dynamodb-admin"
+    container_name: dynamodb-admin
+    depends_on:
+      - dynamodb-local
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb-local:8000
+      - AWS_REGION=ap-southeast-1
   app-node:
    depends_on:
-     - dynamodb-local
+     - dynamodb
    image: amazon/aws-cli
    container_name: app-node
    ports:
@@ -11,4 +22,4 @@ services:
      AWS_ACCESS_KEY_ID: 'DUMMYIDEXAMPLE'
      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
    command:
-     dynamodb describe-limits --endpoint-url http://dynamodb-local:8000 --region us-west-2
+     dynamodb describe-limits --endpoint-url http://dynamodb-local:8000 --region ap-southeast-1
