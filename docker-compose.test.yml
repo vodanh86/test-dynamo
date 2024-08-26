@@ -13,7 +13,7 @@ services:
       - AWS_REGION=ap-southeast-1
   app-node:
    depends_on:
-     - dynamodb
+     - dynamodb-local
    image: amazon/aws-cli
    container_name: app-node
    ports:
