@@ -32,16 +32,8 @@ def unit_tests(context):
 @task
 def docker_test_and_dist(context):
     
-    context.run('rm -rf test_reports')
-    context.run('rm -rf docker_output')
-    
     context.run("docker-compose up -d")
-    context.run('docker build -f test_Dockerfile -t radioactive/'+project_name+'_test:latest .')
-    context.run('docker-compose  -f docker-compose.yml -f docker-compose.test.yml run app-node')
-
-    container_id = context.run(" docker ps -a --filter ancestor=radioactive/"+project_name+"_test -l -q").stdout.strip()
-    context.run('docker cp ' + container_id + ':/code/target/test-reports test_reports')
-    context.run('docker cp ' + container_id + ':/code/target/universal docker_output ')
+    context.run('docker-compose  -f docker-compose.yml run app-node')
 
 
 @task
