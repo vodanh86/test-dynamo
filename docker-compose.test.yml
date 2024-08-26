@@ -1,10 +1,8 @@
 version: '3.0'
 services:
-  test_and_publish:
+  app-node:
    depends_on:
      - dynamodb-local
-   links:
-      - dynamodb-local
    image: amazon/aws-cli
    container_name: app-node
    ports:
@@ -14,4 +12,3 @@ services:
      AWS_SECRET_ACCESS_KEY: 'DUMMYEXAMPLEKEY'
    command:
      dynamodb describe-limits --endpoint-url http://dynamodb-local:8000 --region us-west-2
-
